@@ -1,88 +1,71 @@
 # A. Rumb Needs a Hand
 
-**Codeforces Problem:** A. Rumb Needs a Hand
-**Rating:** —
-**Topic:** Permutations, Simulation
+**Time Limit:** 1 second
 
-## Problem Statement
+**Memory Limit:** 256 megabytes
 
-You are given a permutation `p` of length `n`.
+Mr. Rumb visits a prosthetist because his arms have gone numb. The prosthetist can assemble replacements, but their numbered components are out of order. Apparently, even getting a helping hand requires some assembly.
 
-You must perform **exactly one operation**:
+Formally, the labels on the components form a **permutation** `p` of length `n`.
 
-1. Choose any number of indices:
-   `i1 < i2 < ... < im`
-2. Reverse the elements at those selected indices.
+Mr. Rumb can program a machine to perform the following operation **exactly once**:
 
-The selected indices **do not need to be consecutive**.
+- Choose an integer `m` (`1 ≤ m ≤ n`) and indices `i1 < i2 < ... < im`.
+- Reverse the elements of `p` at the chosen indices.
 
-For example:
+More precisely, for every `j` from `1` to `m`, the element at index `ij` moves to index `im-j+1`. All other elements remain unchanged.
+
+The chosen indices do not have to be consecutive.
+
+For example, suppose:
 
 ```text
 p = [1, 6, 3, 4, 5, 2]
 ```
 
-If we choose indices:
-
-```text
-2, 4, 6
-```
-
-the selected elements are:
+If you choose indices `2, 4, 6`, the selected elements are:
 
 ```text
 [6, 4, 2]
 ```
 
-After reversing them:
-
-```text
-[2, 4, 6]
-```
-
-the permutation becomes:
+After reversing them, `p` becomes:
 
 ```text
 [1, 2, 3, 4, 5, 6]
 ```
 
-Determine whether it is possible to sort the permutation into increasing order using exactly one such operation.
+Determine whether Mr. Rumb can sort `p` in increasing order.
+
+## Permutation Definition
+
+A permutation of length `n` is an array consisting of `n` distinct integers from `1` to `n` in arbitrary order.
+
+For example:
+
+- `[2, 3, 1, 5, 4]` is a permutation.
+- `[1, 2, 2]` is not a permutation because `2` appears twice.
+- `[1, 3, 4]` is not a permutation because `n = 3` but the array contains `4`.
 
 ## Input
 
-The first line contains an integer `t`, the number of test cases.
+Each test contains multiple test cases.
 
-For each test case:
+The first line contains the number of test cases `t` (`1 ≤ t ≤ 500`).
 
-* The first line contains an integer `n`.
-* The second line contains a permutation `p` of length `n`.
+The description of the test cases follows.
 
-### Constraints
+The first line of each test case contains a single integer `n` (`1 ≤ n ≤ 100`).
 
-```text
-1 ≤ t ≤ 500
-1 ≤ n ≤ 100
-```
+The second line contains a permutation `p1, p2, ..., pn` of the integers from `1` to `n`.
 
 ## Output
 
-For each test case, print:
+For each test case, output `YES` if it is possible to sort `p` in increasing order after performing exactly one operation. Otherwise, output `NO`.
 
-```text
-YES
-```
+You can output the answer in any case (upper or lower). For example, the strings `yEs`, `yes`, `Yes`, and `YES` will all be recognized as positive answers.
 
-if the permutation can be sorted using exactly one operation.
-
-Otherwise, print:
-
-```text
-NO
-```
-
-The answer is case-insensitive.
-
-## Examples
+## Example
 
 ### Input
 
@@ -110,42 +93,14 @@ NO
 YES
 ```
 
-## Key Observation
+## Note
 
-The operation only reverses the elements at the selected positions.
+In the first test case, choose the only index. Reversing a single element does not change the permutation, so the requirement to perform exactly one operation is satisfied.
 
-For the final array to become sorted, every element that is already in its correct position can be left unselected.
-
-The elements that are in the wrong positions must be selected in such a way that reversing their values puts every element into its correct position.
-
-Therefore, we can check whether the permutation can be transformed into the sorted permutation by reversing a suitable subsequence of positions.
-
-## Approach
-
-A direct way to think about the operation is:
-
-* Compare `p` with the sorted permutation.
-* Find the positions where they differ.
-* These positions are the only ones that need to participate in the reversal.
-* Check whether reversing the elements at those positions makes the permutation sorted.
-
-Because `n ≤ 100`, an `O(n²)` solution is easily fast enough.
-
-## Complexity
-
-For each test case:
+In the second test case, choose indices `1` and `4`. The resulting permutation is:
 
 ```text
-Time:  O(n²)
-Space: O(n)
+[1, 2, 3, 4]
 ```
 
-## Solution
-
-The C++ implementation is available in:
-
-[`solution.cpp`](solution.cpp)
-
-## Original Problem
-
-[Codeforces — A. Rumb Needs a Hand](https://codeforces.com/)
+In the fifth test case, choose indices `2`, `4`, and `6`. Notice that the chosen indices are not consecutive.
